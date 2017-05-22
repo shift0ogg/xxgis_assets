@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>屿东城地图测试</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="build/ol.css" type="text/css">
+    <script src="build/ol.js?rev=@hash"></script>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="js/xxgis/xxgis.css?rev=@hash" type="text/css">
+    <script src="js/xxgis/xxgis-olcontrollers.js?rev=@hash"></script>
+    <script src="js/xxgis/xxgis-ollayer.js?rev=@hash9"></script>
+</head>
+
+<body>
+    <div>
+        <header>
+            <button type="button" id="btn1">添加</button>
+            <button type="button" id="btn2">清除</button>
+            <button type="button" id="btn3">模拟</button>
+            <button type="button" id="btn4">全图</button>
+            <button type="button" id="btn5">漫游</button>
+            <button type="button" id="btn6">选择地图位置</button>
+            <button type="button" id="btn7">查询信息</button>
+            <button type="button" id="btn8">显示基站</button>
+        </header>
+        <div>
+            <div id="fullscreen" class="fullscreen">
+                <div id="map" class="map"></div>
+
+            </div>
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div><div id="mouse-position"></div>
+            <strong>Copyright &copy; 2014-2017 <a href="http://www.xxgis.net.cn">XXGIS</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <script>
+    var WorkManager = new XXGIS.WorkMap("map");
+    WorkManager.initLayers();
+
+    //websocket 用     
+    //web api   用
+    //WorkManager.addPersonArray([{ "id" : "A171" ,  "x" : -3982700 , "y" : 13800  , "name" : "Test1"}]) ; 
+
+    $("#btn1").click(function() {
+        //var x = -23500 + Math.random() * 47268;
+        //var y = -11800 +　Math.random() * 23664;
+        var id = "A171" //Math.random() *100; 
+        var x = 10676
+        var y = 296;
+        var id = "A171" //Math.random() *100; 
+        WorkManager.updatePerson({
+            "id": id,
+            "x": x,
+            "y": y,
+            "name": "Test1",
+            "pic": "!path!"
+        });
+    })
+    $("#btn2").click(function() {
+        WorkManager.clearPersons();
+    })
+    $("#btn3").click(function() {
+        var arr1 = [];
+        for (var i = 0; i < 100; i++) {
+            var x = -23500 + Math.random() * 47268;
+            var y = -11800 + Math.random() * 23664;
+            var id = Math.random() * 100;
+            arr1.push({
+                "id": id,
+                "x": x,
+                "y": y,
+                type: i % 3,
+                "name": "潘华国",
+                "pic": "!path!"
+            });
+        }
+        WorkManager.addPersonArray(arr1);
+    })
+    $("#btn4").click(function() {
+        WorkManager.ZoomAll();
+    })
+    $("#btn5").click(function() {
+        WorkManager.ZoomTo("A171");
+    })
+    $("#btn6").click(function() {
+        WorkManager.setTool(1) ; 
+    })
+    $("#btn7").click(function() {
+        WorkManager.setTool(0) ; 
+    })
+    $("#btn8").click(function() {
+
+        /*添加基站位置*/
+        WorkManager.updatePerson({
+            "id": '6001',
+            "x": 10676,
+            "y": 296,
+            "name": "6001",
+            "pic": "----",
+            'type': 3
+        });
+        WorkManager.updatePerson({
+            "id": '6002',
+            "x": 15829 ,
+            "y":  -386,
+            "name": "6002",
+            "pic": "----",
+            'type': 3
+        });
+        WorkManager.updatePerson({
+             "id": '6003',
+            "x": 14068 , 
+            "y":  -5082,
+            "name": "6003",
+            "pic": "----",
+            'type': 3
+        });
+    })
+
+    var wsImpl = window.WebSocket || window.MozWebSocket;
+    window.ws = new wsImpl('ws://192.168.1.130:9000/');
+    ws.onmessage = function(evt) {
+        var arr = evt.data.split(',') ; 
+        console.log(arr) ; 
+        WorkManager.updatePerson({
+            "id": arr[1],
+            "x": -4007057+parseFloat(arr[5])*1000,
+            "y": 998+parseFloat(arr[6])*1000,
+            "name": arr[1],
+            "pic": "!path!"
+        });
+    };
+    </script>
+</body>
+
+</html>

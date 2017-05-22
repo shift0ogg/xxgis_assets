@@ -1,0 +1,62 @@
+.label,
+.title {
+    background: blue;
+    color: #fff;
+    padding: 3px;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 3px;
+    width: 200px;
+}
+
+.ol-popup-closer {
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer:after {
+    content: "x";
+    color: #fff;
+}
+
+.rotate-north {
+    top: 65px;
+    left: .5em;
+}
+
+.ol-touch .rotate-north {
+    top: 80px;
+}
+
+.fullscreen:-moz-full-screen {
+    height: 100%;
+}
+
+.fullscreen:-webkit-full-screen {
+    height: 100%;
+}
+
+.fullscreen:-ms-fullscreen {
+    height: 100%;
+}
+
+.fullscreen:fullscreen {
+    height: 100%;
+}
+
+.fullscreen {
+    width: 100%;
+    height: 500px;
+}
+
+.ol-rotate {
+    top: 3em;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+}
