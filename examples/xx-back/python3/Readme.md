@@ -166,5 +166,23 @@ Dictionary（字典）
 
 
 
-	您也可以使用del语句删除一些对象引用。
-	del语句的语法是：del var1[,var2[,var3[....,varN]]]]
+	> 您也可以使用del语句删除一些对象引用。
+	> del语句的语法是：del var1[,var2[,var3[....,varN]]]]
+
+7、__name__
+每个模块都有一个__name__属性，当其值是'__main__'时，表明该模块自身在运行，否则是被引入。
+
+8、包
+	如果使用形如import item.subitem.subsubitem这种导入形式，除了最后一项，都必须是包，而最后一项则可以是模块或者是包，但是不可以是类，函数或者变量的名字。
+
+    > from sound.effects import * 
+	导入语句遵循如下规则：如果包定义文件 __init__.py 存在一个叫做 __all__ 的列表变量，那么在使用 from package import * 的时候就把这个列表中的所有名字作为包内容导入。作为包的作者，可别忘了在更新包之后保证 __all__ 也更新了啊。
+	> __all__ = ["echo", "surround", "reverse"]
+	这表示当你使用from sound.effects import *这种用法时，你只会导入包里面这三个子模块。
+
+	>from Package import specific_submodule这种方法永远不会有错。事实上，这也是推荐的方法。
+	>如果在结构中包是一个子包（比如这个例子中对于包sound来说），而你又想导入兄弟包（同级别的包）你就得使用导入绝对的路径来导入
+	> from . import echo
+	> from .. import formats
+	> from ..filters import equalizer
+

@@ -8,7 +8,7 @@ from school.models import Test
 # 数据库操作
 def testdb(request):
 	#response = token_urlsafe(10)
-    test1 = Test(name="response")
+    test1 = Test(name="response", memo="memo")
     test1.save()
     return show(request)
 
